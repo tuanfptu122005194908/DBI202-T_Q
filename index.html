@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Database Theory - Học SQL Toàn Diện</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -38,6 +39,24 @@
         color: #667eea;
         font-size: 2.5em;
         margin-bottom: 10px;
+      }
+
+      h2 {
+        color: #764ba2;
+        margin: 20px 0 15px 0;
+        font-size: 1.8em;
+      }
+
+      h3 {
+        color: #667eea;
+        margin: 15px 0 10px 0;
+        font-size: 1.5em;
+      }
+
+      h4 {
+        color: #764ba2;
+        margin: 12px 0 8px 0;
+        font-size: 1.2em;
       }
 
       .subtitle {
@@ -167,17 +186,6 @@
         box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
       }
 
-      .topic-card h3 {
-        color: #667eea;
-        margin-bottom: 15px;
-        font-size: 1.5em;
-      }
-
-      .topic-card h4 {
-        color: #764ba2;
-        margin: 15px 0 10px 0;
-      }
-
       .code-block {
         background: #2d3748;
         color: #e2e8f0;
@@ -212,10 +220,19 @@
         border-radius: 8px;
       }
 
+      .warning {
+        background: #f8d7da;
+        border-left: 4px solid #dc3545;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 8px;
+      }
+
       ul,
       ol {
         margin-left: 30px;
         margin-top: 10px;
+        margin-bottom: 10px;
       }
 
       li {
@@ -259,8 +276,12 @@
         border-radius: 15px;
       }
 
-      .hidden {
-        display: none;
+      .formula {
+        background: #e8f5e9;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        text-align: center;
       }
 
       @media (max-width: 768px) {
@@ -301,725 +322,332 @@
       </header>
 
       <div class="nav-tabs">
-        <button class="nav-tab active" data-section="basics">
-          Kiến thức cơ bản
+        <button class="nav-tab active" data-section="chapter1">
+          Chương 1: Tổng quan
         </button>
-        <button class="nav-tab" data-section="constraints">
-          Constraints & Index
+        <button class="nav-tab" data-section="chapter2">
+          Chương 2: Mô hình quan hệ
         </button>
-        <button class="nav-tab" data-section="queries">
-          Truy vấn nâng cao
+        <button class="nav-tab" data-section="chapter3">
+          Chương 3: Chuẩn hóa
         </button>
-        <button class="nav-tab" data-section="functions">
-          Functions & Ranking
+        <button class="nav-tab" data-section="chapter4">Chương 4: ERD</button>
+        <button class="nav-tab" data-section="chapter5">Chương 5: Bag</button>
+        <button class="nav-tab" data-section="chapter6">Chương 6: SQL</button>
+        <button class="nav-tab" data-section="chapter7">
+          Chương 7: Thực tế
         </button>
-        <button class="nav-tab" data-section="advanced">Nâng cao</button>
-        <button class="nav-tab" data-section="normalization">Chuẩn hóa</button>
+        <button class="nav-tab" data-section="chapter8">
+          Chương 8: Lập trình
+        </button>
+        <button class="nav-tab" data-section="bonus">Bonus</button>
       </div>
 
-      <div id="basics" class="content-section active">
+      <!-- CHƯƠNG 1 -->
+      <div id="chapter1" class="content-section active">
+        <h2>Chương 1: Các Thế Giới của Hệ Thống Cơ Sở Dữ Liệu</h2>
+
         <div class="topic-card">
-          <h3>1. Các kiểu dữ liệu trong SQL</h3>
-          <h4>Numeric Types (Kiểu số)</h4>
+          <h3>1.1 Các khái niệm cơ bản</h3>
           <ul>
-            <li><strong>TINYINT:</strong> Số nguyên từ 0 đến 255</li>
             <li>
-              <strong>SMALLINT:</strong> Số nguyên nhỏ (-32,768 đến 32,767)
+              <strong>Dữ liệu (Data):</strong> Là các sự kiện thô, không có ý
+              nghĩa ngữ cảnh (ví dụ: số, văn bản)
             </li>
             <li>
-              <strong>INT/INTEGER:</strong> Số nguyên lớn (-2,147,483,648 đến
-              2,147,483,647)
-            </li>
-            <li><strong>BIGINT:</strong> Số nguyên rất lớn</li>
-            <li>
-              <strong>DECIMAL(p, s)/NUMERIC(p, s):</strong> Số thập phân với p
-              tổng số chữ số và s chữ số phần thập phân
+              <strong>Thông tin (Information):</strong> Dữ liệu đã được xử lý và
+              tổ chức trong ngữ cảnh
             </li>
             <li>
-              <strong>FLOAT(n):</strong> Số thực có độ chính xác đôi khi không
-              hoàn hảo
+              <strong>Cơ sở dữ liệu (Database):</strong> Tập hợp thông tin tồn
+              tại trong thời gian dài, được quản lý bởi DBMS. Thu thập dữ liệu
+              hoặc thông tin có tổ chức có thể được truy cập, cập nhật và quản
+              lý
+            </li>
+            <li>
+              <strong>Hệ quản trị cơ sở dữ liệu (DBMS):</strong> Phần mềm để tạo
+              và duy trì cơ sở dữ liệu
+            </li>
+            <li>
+              <strong>Hệ thống cơ sở dữ liệu (Database System):</strong> Gồm
+              DBMS và dữ liệu
             </li>
           </ul>
-          <div class="example">
-            <div class="example-title">Ví dụ trong bảng products:</div>
-            <div class="code-block">
-              CREATE TABLE products ( product_id INT PRIMARY KEY, product_name
-              VARCHAR(100), brand_id INT, category_id INT, model_year INT,
-              list_price DECIMAL(10, 2) );
-            </div>
-          </div>
         </div>
 
         <div class="topic-card">
-          <h3>2. Phân biệt CHAR vs VARCHAR</h3>
-          <table class="comparison-table">
-            <tr>
-              <th>CHAR</th>
-              <th>VARCHAR</th>
-            </tr>
-            <tr>
-              <td>Độ dài cố định</td>
-              <td>Độ dài thay đổi</td>
-            </tr>
-            <tr>
-              <td>Điền khoảng trắng nếu ngắn hơn</td>
-              <td>Chỉ dùng không gian cần thiết</td>
-            </tr>
-            <tr>
-              <td>Dùng cho dữ liệu cố định</td>
-              <td>Dùng cho dữ liệu thay đổi</td>
-            </tr>
-          </table>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              -- CHAR cho store_name INSERT INTO stores (store_name) VALUES
-              ('BikeStore'); -- VARCHAR cho email INSERT INTO customers(email)
-              VALUES ('abcdefg2342343@gmail.com');
-            </div>
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>3. Chuyển đổi kiểu dữ liệu</h3>
+          <h3>1.2 Các mô hình dữ liệu ban đầu</h3>
           <ul>
-            <li><strong>CAST:</strong> Chuyển đổi kiểu dữ liệu chuẩn</li>
             <li>
-              <strong>CONVERT:</strong> Tương tự CAST nhưng có thêm tùy chọn
-              định dạng (chỉ SQL Server)
+              <strong
+                >Mô hình dữ liệu phân cấp (Hierarchical Data Model):</strong
+              >
+              Sử dụng trong các DBMS mainframe ban đầu như IMS của IBM. Nó là
+              cấu trúc cây
+            </li>
+            <li>
+              <strong>Mô hình dữ liệu mạng (Network Data Model):</strong> Do
+              Charles Bachman phát triển, cho phép mỗi bản ghi có nhiều bản ghi
+              cha và con
+            </li>
+            <li>
+              <strong
+                >Hệ thống cơ sở dữ liệu quan hệ (Relational Database
+                Systems):</strong
+              >
+              Được định nghĩa bởi Edgar F. Codd, sử dụng mô hình quan hệ dựa
+              trên các bảng. SQL trở thành ngôn ngữ truy vấn quan trọng nhất,
+              với sản phẩm thương mại đầu tiên là Oracle v.2
             </li>
           </ul>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              -- Chuyển số thành chuỗi SELECT CAST(123 AS VARCHAR); -- Chuyển
-              ngày sang định dạng dd/MM/yyyy SELECT CONVERT(VARCHAR, GETDATE(),
-              103);
-            </div>
-          </div>
         </div>
 
         <div class="topic-card">
-          <h3>4. Phân biệt TRUNCATE vs DROP vs DELETE</h3>
-          <table class="comparison-table">
-            <tr>
-              <th>Lệnh</th>
-              <th>Chức năng</th>
-              <th>Có thể rollback?</th>
-            </tr>
-            <tr>
-              <td>TRUNCATE</td>
-              <td>Xóa tất cả dữ liệu, giữ cấu trúc bảng</td>
-              <td>Không</td>
-            </tr>
-            <tr>
-              <td>DROP</td>
-              <td>Xóa cả bảng lẫn dữ liệu</td>
-              <td>Không</td>
-            </tr>
-            <tr>
-              <td>DELETE</td>
-              <td>Xóa dữ liệu theo điều kiện</td>
-              <td>Có</td>
-            </tr>
-          </table>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              TRUNCATE TABLE orders; DROP TABLE stocks; DELETE FROM customers
-              WHERE city = 'Tokyo';
-            </div>
-          </div>
+          <h3>1.3 Các loại ngôn ngữ trong SQL</h3>
+          <h4>1. TCL (Transaction Control Language)</h4>
+          <ul>
+            <li>
+              <strong>Chức năng:</strong> Quản lý các giao dịch trong cơ sở dữ
+              liệu
+            </li>
+            <li><strong>Các câu lệnh:</strong> COMMIT, ROLLBACK, SAVEPOINT</li>
+          </ul>
+
+          <h4>2. DCL (Data Control Language)</h4>
+          <ul>
+            <li>
+              <strong>Chức năng:</strong> Kiểm soát quyền truy cập vào dữ liệu
+            </li>
+            <li><strong>Các câu lệnh:</strong> GRANT, REVOKE</li>
+          </ul>
+
+          <h4>3. DDL (Data Definition Language)</h4>
+          <ul>
+            <li>
+              <strong>Chức năng:</strong> Định nghĩa và quản lý các cấu trúc dữ
+              liệu
+            </li>
+            <li>
+              <strong>Các câu lệnh:</strong> CREATE, ALTER, DROP, TRUNCATE
+            </li>
+          </ul>
+
+          <h4>4. DML (Data Manipulation Language)</h4>
+          <ul>
+            <li>
+              <strong>Chức năng:</strong> Thao tác dữ liệu (truy vấn, chèn, xóa,
+              cập nhật)
+            </li>
+            <li>
+              <strong>Các câu lệnh:</strong> SELECT, INSERT, UPDATE, DELETE
+            </li>
+          </ul>
         </div>
 
         <div class="topic-card">
-          <h3>5. IDENTITY vs SEQUENCE</h3>
-          <table class="comparison-table">
-            <tr>
-              <th>IDENTITY</th>
-              <th>SEQUENCE</th>
-            </tr>
-            <tr>
-              <td>Tự động tăng trong một cột</td>
-              <td>Tạo chuỗi số dùng cho nhiều bảng</td>
-            </tr>
-            <tr>
-              <td>Gắn với một bảng cụ thể</td>
-              <td>Độc lập, có thể dùng chung</td>
-            </tr>
-          </table>
-          <div class="example">
-            <div class="example-title">Ví dụ IDENTITY:</div>
-            <div class="code-block">
-              CREATE TABLE orders ( order_id INT IDENTITY(1, 1) PRIMARY KEY,
-              customer_id INT, order_date DATE );
-            </div>
-          </div>
-          <div class="example">
-            <div class="example-title">Ví dụ SEQUENCE:</div>
-            <div class="code-block">
-              CREATE SEQUENCE seq_transaction_id START WITH 1 INCREMENT BY 1; --
-              Có thể dùng cho cả orders và invoices
-            </div>
-          </div>
+          <h3>1.4 Người dùng cơ sở dữ liệu</h3>
+          <ul>
+            <li>
+              <strong>Quản trị viên (Database Administrator):</strong> Cấp quyền
+              truy cập và giám sát sử dụng
+            </li>
+            <li>
+              <strong>Nhà thiết kế (Database Designer):</strong> Xác định nội
+              dung và cấu trúc cơ sở dữ liệu
+            </li>
+            <li>
+              <strong>Người dùng cuối (End User):</strong> Sử dụng dữ liệu cho
+              các truy vấn và báo cáo
+            </li>
+          </ul>
         </div>
 
         <div class="topic-card">
-          <h3>10. Thứ tự thực thi SQL</h3>
-          <div class="note">
-            <strong>Thứ tự thực thi các mệnh đề:</strong>
-            <ol>
-              <li>
-                <strong>FROM</strong> (bao gồm JOIN) - Xác định nguồn dữ liệu
-              </li>
-              <li><strong>WHERE</strong> - Lọc dữ liệu</li>
-              <li><strong>GROUP BY</strong> - Nhóm dữ liệu</li>
-              <li><strong>HAVING</strong> - Lọc nhóm</li>
-              <li><strong>SELECT</strong> - Chọn cột</li>
-              <li><strong>ORDER BY</strong> - Sắp xếp</li>
-            </ol>
-            <p>
-              <strong>Lưu ý:</strong> Thứ tự viết không ảnh hưởng thứ tự thực
-              thi!
-            </p>
-          </div>
-          <div class="example">
-            <div class="example-title">
-              Ví dụ: Khách hàng có ít nhất 3 đơn từ 2024-01-01
-            </div>
-            <div class="code-block">
-              SELECT c.customer_id, c.first_name, c.last_name, COUNT(o.order_id)
-              AS total_orders FROM customers AS c JOIN orders AS o ON
-              c.customer_id = o.customer_id WHERE o.order_date >= '2024-01-01'
-              GROUP BY c.customer_id, c.first_name, c.last_name HAVING
-              COUNT(o.order_id) > 2 ORDER BY total_orders DESC;
-            </div>
-          </div>
+          <h3>1.5 Tích hợp thông tin</h3>
+          <ul>
+            <li>
+              <strong>Kho dữ liệu (Data Warehouse):</strong> Sao chép thông tin
+              từ nhiều cơ sở dữ liệu vào một cơ sở dữ liệu trung tâm
+            </li>
+            <li>
+              <strong>Middleware:</strong> Hỗ trợ mô hình tích hợp dữ liệu từ
+              nhiều cơ sở dữ liệu khác nhau
+            </li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>1.6 Xu hướng hiện đại</h3>
+          <ul>
+            <li>
+              <strong>Cơ sở dữ liệu không quan hệ (NoSQL):</strong> MongoDB,
+              Redis
+            </li>
+            <li>
+              <strong>Cơ sở dữ liệu đa mô hình (Multi-model Databases):</strong>
+              Oracle, ArangoDB
+            </li>
+          </ul>
         </div>
       </div>
 
-      <div id="constraints" class="content-section">
+      <!-- CHƯƠNG 2 -->
+      <div id="chapter2" class="content-section">
+        <h2>Chương 2: Mô Hình Quan Hệ của Dữ Liệu</h2>
+
         <div class="topic-card">
-          <h3>6. Constraints trong SQL</h3>
+          <h3>2.1 Mô hình dữ liệu</h3>
           <p>
-            Constraints là các ràng buộc trên cột nhằm bảo vệ tính toàn vẹn dữ
-            liệu:
+            <strong>Mô hình dữ liệu (Data Model):</strong> Tập hợp các khái niệm
+            để mô tả dữ liệu gồm cấu trúc, các thao tác và các ràng buộc trên dữ
+            liệu
+          </p>
+          <p>
+            <strong>Mô hình dữ liệu bán cấu trúc:</strong> Gồm XML và các tiêu
+            chuẩn liên quan
+          </p>
+        </div>
+
+        <div class="topic-card">
+          <h3>2.2 Mô hình quan hệ</h3>
+          <p>
+            <strong>Mô hình quan hệ (Relational Model)</strong> gồm hai phần:
           </p>
           <ul>
-            <li><strong>NOT NULL:</strong> Không cho phép giá trị null</li>
-            <li><strong>UNIQUE:</strong> Đảm bảo giá trị duy nhất</li>
             <li>
-              <strong>PRIMARY KEY:</strong> Định danh duy nhất cho một hàng
+              <strong>Schema:</strong> Tên quan hệ, tên thuộc tính và kiểu dữ
+              liệu
             </li>
-            <li><strong>FOREIGN KEY:</strong> Tạo liên kết giữa các bảng</li>
-            <li><strong>CHECK:</strong> Kiểm tra giá trị theo điều kiện</li>
-            <li><strong>DEFAULT:</strong> Giá trị mặc định</li>
+            <li><strong>Instance:</strong> Một bảng với các hàng và cột</li>
           </ul>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              ALTER TABLE orders ADD CONSTRAINT fk_customer FOREIGN KEY
-              (customer_id) REFERENCES customers(customer_id);
-            </div>
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>7. Cách tạo Constraints</h3>
-          <h4>1. Khi tạo bảng:</h4>
-          <div class="code-block">
-            CREATE TABLE products ( product_id INT PRIMARY KEY, product_name
-            VARCHAR(50) NOT NULL );
-          </div>
-          <h4>2. Sau khi tạo bảng:</h4>
-          <div class="code-block">
-            ALTER TABLE products ADD CONSTRAINT unique_product_name UNIQUE
-            (product_name);
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>8. UNIQUE vs PRIMARY KEY</h3>
-          <table class="comparison-table">
-            <tr>
-              <th>UNIQUE</th>
-              <th>PRIMARY KEY</th>
-            </tr>
-            <tr>
-              <td>Cho phép giá trị duy nhất</td>
-              <td>Đảm bảo duy nhất và định danh</td>
-            </tr>
-            <tr>
-              <td>Có thể NULL (trừ khi NOT NULL)</td>
-              <td>KHÔNG cho phép NULL</td>
-            </tr>
-            <tr>
-              <td>Nhiều cột UNIQUE trong bảng</td>
-              <td>Chỉ MỘT PRIMARY KEY</td>
-            </tr>
-          </table>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              -- Primary Key ALTER TABLE stores ADD CONSTRAINT pk_store_id
-              PRIMARY KEY (store_id); -- Unique ALTER TABLE customers ADD
-              CONSTRAINT unique_email UNIQUE (email);
-            </div>
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>9. Index trong SQL</h3>
           <p>
-            <strong>Index</strong> là đối tượng cơ sở dữ liệu giúp tăng tốc độ
-            truy vấn bằng cách lưu con trỏ đến dữ liệu.
+            <strong>Schema cơ sở dữ liệu:</strong> Tập hợp các schema của các
+            quan hệ trong cơ sở dữ liệu
           </p>
-          <h4>Các loại Index:</h4>
+
+          <h4>Các loại thuộc tính:</h4>
+          <ul>
+            <li>Khóa chính (Primary Key)</li>
+            <li>Khóa ngoại (Foreign Key)</li>
+            <li>Thuộc tính nhiều giá trị (Multivalued Attribute)</li>
+            <li>Thuộc tính dẫn xuất (Derived Attribute)</li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>2.3 Đại số quan hệ (Relational Algebra)</h3>
+          <p>Tập hợp các phép toán trên quan hệ:</p>
+
+          <h4>Phép toán tập hợp (Set Operations):</h4>
+          <ul>
+            <li><strong>Union (∪):</strong> Hợp</li>
+            <li><strong>Intersection (∩):</strong> Giao</li>
+            <li><strong>Difference (-):</strong> Hiệu</li>
+          </ul>
+
+          <h4>Phép toán cơ bản:</h4>
           <ul>
             <li>
-              <strong>Clustered Index:</strong> Sắp xếp và lưu trữ dữ liệu vật
-              lý (chỉ 1 trên mỗi bảng)
+              <strong>Lựa chọn (Selection):</strong> \(\sigma_{điều\_kiện}(R)\)
+              - Chọn các bộ thỏa mãn điều kiện
             </li>
             <li>
-              <strong>Non-clustered Index:</strong> Lưu con trỏ đến dữ liệu (có
-              thể nhiều)
+              <strong>Chiếu (Projection):</strong>
+              \(\pi_{danh\_sách\_thuộc\_tính}(R)\) - Chọn các thuộc tính
             </li>
-            <li><strong>Single-Column Index:</strong> Index trên một cột</li>
-            <li><strong>Composite Index:</strong> Index trên nhiều cột</li>
-            <li><strong>Unique Index:</strong> Đảm bảo giá trị duy nhất</li>
+            <li><strong>Phép nhân Cartesian:</strong> \(R \times S\)</li>
+            <li>
+              <strong>Phép nối (Join):</strong> \(R \bowtie S\) - Nối tự nhiên
+            </li>
+            <li><strong>Đổi tên (Rename):</strong> \(\rho_{tên\_mới}(R)\)</li>
           </ul>
+
           <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              -- Single-column index CREATE INDEX idx_customer_name ON customers
-              (last_name); -- Composite index CREATE INDEX idx_name_department
-              ON employees(first_name, department_id);
+            <div class="example-title">Ví dụ về biểu thức quan hệ:</div>
+            <p>Tìm tên các sinh viên có điểm > 8:</p>
+            <div class="formula">
+              \(\pi_{tên}(\sigma_{điểm > 8}(SinhVien))\)
             </div>
           </div>
         </div>
       </div>
 
-      <div id="queries" class="content-section">
-        <div class="topic-card">
-          <h3>11. WHERE vs HAVING</h3>
-          <table class="comparison-table">
-            <tr>
-              <th>WHERE</th>
-              <th>HAVING</th>
-            </tr>
-            <tr>
-              <td>Lọc dữ liệu TRƯỚC khi nhóm</td>
-              <td>Lọc dữ liệu SAU khi nhóm</td>
-            </tr>
-            <tr>
-              <td>Không dùng với hàm tổng hợp</td>
-              <td>Dùng với hàm tổng hợp</td>
-            </tr>
-          </table>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              -- WHERE: lọc trước SELECT * FROM customers WHERE city = 'Tokyo';
-              -- HAVING: lọc sau khi nhóm SELECT store_id, COUNT(product_id)
-              FROM stocks GROUP BY store_id HAVING COUNT(product_id) > 10;
-            </div>
-          </div>
-        </div>
+      <!-- CHƯƠNG 3 -->
+      <div id="chapter3" class="content-section">
+        <h2>Chương 3: Lý Thuyết Thiết Kế cho Cơ Sở Dữ Liệu Quan Hệ</h2>
 
         <div class="topic-card">
-          <h3>12. UNION, MERGE, PIVOT, INTERSECT</h3>
-          <h4>UNION / UNION ALL</h4>
-          <ul>
-            <li>
-              <strong>UNION:</strong> Kết hợp kết quả và loại bỏ trùng lặp
-            </li>
-            <li><strong>UNION ALL:</strong> Giữ lại các hàng trùng lặp</li>
-          </ul>
-          <div class="code-block">
-            SELECT product_name FROM products WHERE category_id = 1 UNION SELECT
-            product_name FROM products WHERE category_id = 2;
-          </div>
-
-          <h4>MERGE</h4>
-          <p>Thực hiện INSERT, UPDATE, DELETE dựa trên điều kiện</p>
-          <div class="code-block">
-            MERGE INTO stocks AS target USING new_stocks AS source ON
-            target.product_id = source.product_id WHEN MATCHED THEN UPDATE SET
-            target.quantity = source.quantity;
-          </div>
-
-          <h4>PIVOT</h4>
-          <p>Chuyển dữ liệu từ hàng sang cột</p>
-          <div class="code-block">
-            SELECT * FROM ( SELECT store_id, model_year, list_price FROM
-            products ) AS SourceTable PIVOT ( SUM(list_price) FOR model_year IN
-            ([2022], [2023]) ) AS PivotTable;
-          </div>
-
-          <h4>INTERSECT</h4>
-          <p>Trả về các hàng chung giữa hai truy vấn</p>
-          <div class="code-block">
-            SELECT product_name FROM products WHERE brand_id = 1 INTERSECT
-            SELECT product_name FROM products WHERE category_id = 3;
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>14. GROUP BY</h3>
+          <h3>3.1 Phụ thuộc hàm (Functional Dependencies)</h3>
           <p>
-            Dùng để nhóm dữ liệu theo một hoặc nhiều cột, thường kết hợp với hàm
-            tổng hợp.
+            <strong>Định nghĩa:</strong> Một tập thuộc tính X trong R quyết định
+            một thuộc tính Y trong R (viết là \(X \rightarrow Y\)) nếu mỗi giá
+            trị của X liên kết với chính xác một giá trị của Y
           </p>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              SELECT store_id, COUNT(product_id) AS total_products FROM stocks
-              GROUP BY store_id;
-            </div>
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>16. JOIN trong SQL</h3>
-          <h4>Các loại JOIN:</h4>
-          <ul>
-            <li>
-              <strong>INNER JOIN:</strong> Chỉ lấy hàng khớp ở cả hai bảng
-            </li>
-            <li>
-              <strong>LEFT JOIN:</strong> Lấy tất cả từ bảng trái + hàng khớp từ
-              bảng phải
-            </li>
-            <li>
-              <strong>RIGHT JOIN:</strong> Lấy tất cả từ bảng phải + hàng khớp
-              từ bảng trái
-            </li>
-            <li>
-              <strong>FULL OUTER JOIN:</strong> Lấy tất cả hàng từ cả hai bảng
-            </li>
-            <li>
-              <strong>CROSS JOIN:</strong> Tích Descartes (không cần
-              relationship)
-            </li>
-          </ul>
-          <div class="example">
-            <div class="example-title">Ví dụ INNER JOIN:</div>
-            <div class="code-block">
-              SELECT o.order_id, c.first_name, c.last_name FROM orders o INNER
-              JOIN customers c ON o.customer_id = c.customer_id;
-            </div>
-          </div>
-          <div class="note">
-            <strong>Có thể JOIN hai bảng không có quan hệ?</strong> Có! Dùng
-            CROSS JOIN
-            <div class="code-block">
-              SELECT * FROM products p CROSS JOIN brands b;
-            </div>
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>17. VIEW trong SQL</h3>
-          <p>
-            <strong>VIEW</strong> là bảng ảo được tạo từ câu truy vấn, không
-            chứa dữ liệu thực tế.
-          </p>
-          <p>
-            <strong>Lợi ích:</strong> Đơn giản hóa truy vấn phức tạp, tăng bảo
-            mật
-          </p>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              CREATE VIEW customer_orders AS SELECT c.customer_id, c.first_name,
-              o.order_id, o.order_date FROM customers c JOIN orders o ON
-              c.customer_id = o.customer_id;
-            </div>
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>18. Subquery (Truy vấn con)</h3>
-          <p>Subquery là truy vấn lồng trong truy vấn khác</p>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              SELECT first_name, last_name FROM customers WHERE customer_id IN (
-              SELECT customer_id FROM orders WHERE order_date > '2025-01-01' );
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="functions" class="content-section">
-        <div class="topic-card">
-          <h3>15. Các Functions trong SQL</h3>
-          <h4>Hàm tổng hợp:</h4>
-          <ul>
-            <li><strong>COUNT():</strong> Đếm số lượng</li>
-            <li><strong>SUM():</strong> Tính tổng</li>
-            <li><strong>AVG():</strong> Tính trung bình</li>
-            <li><strong>MIN(), MAX():</strong> Giá trị nhỏ nhất/lớn nhất</li>
-          </ul>
-          <div class="code-block">
-            SELECT AVG(list_price) AS avg_price FROM products;
-          </div>
-
-          <h4>Hàm chuỗi:</h4>
-          <ul>
-            <li><strong>CONCAT():</strong> Nối chuỗi</li>
-            <li><strong>LENGTH():</strong> Độ dài chuỗi</li>
-            <li><strong>SUBSTRING():</strong> Lấy chuỗi con</li>
-          </ul>
-          <div class="code-block">
-            SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM
-            customers;
-          </div>
-
-          <h4>Hàm ngày tháng:</h4>
-          <ul>
-            <li><strong>CURRENT_DATE():</strong> Ngày hiện tại</li>
-            <li><strong>NOW():</strong> Ngày và giờ hiện tại</li>
-            <li><strong>DATEADD():</strong> Cộng thêm ngày/tháng</li>
-            <li><strong>DATEPART():</strong> Trích xuất phần của ngày</li>
-            <li><strong>DATEDIFF():</strong> Tính khoảng cách giữa hai ngày</li>
-            <li><strong>FORMAT():</strong> Định dạng ngày tháng</li>
-          </ul>
-          <div class="code-block">
-            SELECT CURRENT_DATE AS today_date, NOW() AS current_time;
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>19. ROW_NUMBER, RANK, DENSE_RANK</h3>
-          <h4>ROW_NUMBER()</h4>
-          <p>Gán số thứ tự duy nhất cho mỗi hàng, bắt đầu từ 1</p>
-          <div class="code-block">
-            SELECT * FROM ( SELECT *, ROW_NUMBER() OVER ( ORDER BY list_price
-            DESC ) AS row_num FROM products ) AS sub WHERE row_num = 3;
-          </div>
-
-          <h4>RANK()</h4>
-          <p>
-            Gán thứ hạng, các giá trị giống nhau có cùng thứ hạng, bỏ qua thứ
-            hạng tiếp theo
-          </p>
-          <div class="code-block">
-            SELECT *, RANK() OVER ( ORDER BY list_price DESC ) AS rank_num FROM
-            products;
-          </div>
-
-          <h4>DENSE_RANK()</h4>
-          <p>Tương tự RANK nhưng KHÔNG bỏ qua thứ hạng</p>
-          <div class="code-block">
-            SELECT *, DENSE_RANK() OVER ( ORDER BY list_price DESC ) AS
-            dense_rank_num FROM products;
-          </div>
 
           <div class="note">
-            <strong>So sánh:</strong>
-            <ul>
-              <li>ROW_NUMBER: 1, 2, 3, 4, 5... (luôn duy nhất)</li>
-              <li>RANK: 1, 2, 2, 4, 5... (bỏ qua số 3)</li>
-              <li>DENSE_RANK: 1, 2, 2, 3, 4... (không bỏ qua)</li>
-            </ul>
+            <strong
+              >Phụ thuộc hàm toàn phần (Full Functional Dependency):</strong
+            >
+            Y phụ thuộc toàn phần vào X nếu Y phụ thuộc vào toàn bộ tập X và
+            không phụ thuộc vào bất kỳ tập con đúng nào của X
           </div>
         </div>
 
         <div class="topic-card">
-          <h3>20. CTE (Common Table Expression)</h3>
-          <p>
-            CTE cho phép tạo bảng tạm thời trong phạm vi một truy vấn, giúp code
-            dễ đọc và bảo trì hơn.
-          </p>
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              WITH ProductSales AS ( SELECT product_id, SUM(quantity) AS
-              total_quantity FROM order_items GROUP BY product_id ) SELECT *
-              FROM ProductSales WHERE total_quantity > 10;
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="advanced" class="content-section">
-        <div class="topic-card">
-          <h3>21. Câu lệnh điều khiển</h3>
-          <h4>IF...ELSE</h4>
-          <div class="code-block">
-            DECLARE @quantity INT = 7; IF @quantity > 5 PRINT 'Số lượng lớn hơn
-            5'; ELSE PRINT 'Số lượng nhỏ hơn hoặc bằng 5';
-          </div>
-
-          <h4>CASE</h4>
-          <div class="code-block">
-            SELECT product_id, product_name, CASE WHEN list_price > 1000 THEN
-            'Expensive' WHEN list_price BETWEEN 500 AND 1000 THEN 'Medium' ELSE
-            'Cheap' END AS price_category FROM products;
-          </div>
-
-          <h4>WHILE Loop</h4>
-          <div class="code-block">
-            DECLARE @counter INT = 1; WHILE @counter <= 5 BEGIN PRINT 'Lặp số '
-            + CAST(@counter AS VARCHAR); SET @counter = @counter + 1; END;
-          </div>
-
-          <h4>TRY...CATCH (Exception Handling)</h4>
-          <div class="code-block">
-            BEGIN TRY SELECT 1 / 0; END TRY BEGIN CATCH PRINT 'Có lỗi xảy ra: '
-            + ERROR_MESSAGE(); END CATCH;
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>22. UDF (User-Defined Function)</h3>
-          <p>Hàm do người dùng tạo để thực hiện thao tác lặp lại</p>
-          <h4>Scalar Function (trả về giá trị đơn)</h4>
-          <div class="code-block">
-            CREATE FUNCTION calculate_tax(@price DECIMAL(10, 2)) RETURNS
-            DECIMAL(10, 2) AS BEGIN RETURN @price * 0.1; END;
-          </div>
-
-          <h4>Table-Valued Function (trả về bảng)</h4>
-          <div class="code-block">
-            CREATE FUNCTION get_products_by_category(@cat_id INT) RETURNS TABLE
-            AS RETURN ( SELECT * FROM products WHERE category_id = @cat_id );
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>23. Stored Procedure</h3>
-          <p>
-            Tập hợp câu lệnh SQL được lưu trữ và có thể gọi thực thi nhiều lần
-          </p>
-          <div class="code-block">
-            CREATE PROCEDURE get_products AS BEGIN SELECT * FROM products; END;
-            -- Gọi procedure EXEC get_products;
-          </div>
-
-          <div class="note">
-            <strong>SP vs UDF:</strong>
-            <ul>
-              <li>
-                SP: Có thể thực hiện INSERT/UPDATE/DELETE, không bắt buộc trả về
-                giá trị
-              </li>
-              <li>UDF: Chỉ đọc dữ liệu, bắt buộc trả về giá trị</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>24. Exception Handling</h3>
-          <p>Xử lý ngoại lệ bằng TRY...CATCH để phát hiện và xử lý lỗi</p>
-          <div class="code-block">
-            BEGIN TRY -- Code có thể gây lỗi INSERT INTO orders VALUES (NULL,
-            NULL); END TRY BEGIN CATCH PRINT 'Lỗi: ' + ERROR_MESSAGE(); PRINT
-            'Dòng lỗi: ' + CAST(ERROR_LINE() AS VARCHAR); END CATCH;
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>25. Transaction</h3>
-          <p>
-            Nhóm các thao tác SQL thực thi như một đơn vị, đảm bảo tính toàn vẹn
-            dữ liệu
-          </p>
-          <div class="code-block">
-            BEGIN TRANSACTION; UPDATE products SET stock = stock - 1 WHERE
-            product_id = 1; IF @@ERROR <> 0 ROLLBACK; ELSE COMMIT;
-          </div>
-
-          <div class="note">
-            <strong>Các lệnh Transaction:</strong>
-            <ul>
-              <li><strong>BEGIN TRANSACTION:</strong> Bắt đầu giao dịch</li>
-              <li><strong>COMMIT:</strong> Xác nhận và lưu thay đổi</li>
-              <li><strong>ROLLBACK:</strong> Hủy giao dịch nếu có lỗi</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="topic-card">
-          <h3>26. Trigger</h3>
-          <p>
-            Stored procedure đặc biệt tự động thực thi khi có sự kiện xảy ra
-          </p>
-          <h4>Đặc điểm:</h4>
-          <ul>
-            <li>Tự động thực thi khi có INSERT, UPDATE, DELETE</li>
-            <li>Không có tham số đầu vào</li>
-            <li>Không trả về giá trị</li>
-            <li>Có thể hủy bỏ thao tác bằng ROLLBACK</li>
-          </ul>
-
-          <h4>Loại Trigger:</h4>
+          <h3>3.2 Quy tắc của Armstrong</h3>
           <ul>
             <li>
-              <strong>DML Trigger:</strong> Kích hoạt với INSERT, UPDATE, DELETE
+              <strong>Phản xạ (Reflexivity):</strong> Nếu Y ⊆ X thì \(X
+              \rightarrow Y\)
             </li>
             <li>
-              <strong>DDL Trigger:</strong> Kích hoạt với CREATE, ALTER, DROP
+              <strong>Bổ sung (Augmentation):</strong> Nếu \(X \rightarrow Y\)
+              thì \(XZ \rightarrow YZ\)
+            </li>
+            <li>
+              <strong>Chuyển tiếp (Transitivity):</strong> Nếu \(X \rightarrow
+              Y\) và \(Y \rightarrow Z\) thì \(X \rightarrow Z\)
+            </li>
+            <li>
+              <strong>Kết hợp (Union):</strong> Nếu \(X \rightarrow Y\) và \(X
+              \rightarrow Z\) thì \(X \rightarrow YZ\)
+            </li>
+            <li>
+              <strong>Phân rã (Decomposition):</strong> Nếu \(X \rightarrow YZ\)
+              thì \(X \rightarrow Y\) và \(X \rightarrow Z\)
+            </li>
+            <li>
+              <strong>Giả chuyển tiếp (Pseudotransitivity):</strong> Nếu \(X
+              \rightarrow Y\) và \(WY \rightarrow Z\) thì \(WX \rightarrow Z\)
             </li>
           </ul>
-
-          <div class="example">
-            <div class="example-title">Ví dụ:</div>
-            <div class="code-block">
-              CREATE TRIGGER trg_update_stock ON orders AFTER INSERT AS BEGIN
-              UPDATE products SET stock = stock - 1 WHERE product_id = (SELECT
-              product_id FROM inserted); END;
-            </div>
-          </div>
         </div>
 
         <div class="topic-card">
-          <h3>27. ACID</h3>
-          <p>Thuộc tính của hệ thống CSDL đảm bảo tính toàn vẹn dữ liệu:</p>
-          <div class="note">
-            <ul>
-              <li>
-                <strong>Atomicity (Tính nguyên tử):</strong> Giao dịch thực thi
-                toàn bộ hoặc không thực thi gì cả
-              </li>
-              <li>
-                <strong>Consistency (Tính nhất quán):</strong> Đảm bảo dữ liệu
-                hợp lệ trước và sau giao dịch
-              </li>
-              <li>
-                <strong>Isolation (Tính biệt lập):</strong> Các giao dịch không
-                ảnh hưởng lẫn nhau
-              </li>
-              <li>
-                <strong>Durability (Tính bền vững):</strong> Dữ liệu được lưu
-                vĩnh viễn sau khi hoàn tất
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div id="normalization" class="content-section">
-        <div class="topic-card">
-          <h3>13. Relationship và Chuẩn hóa CSDL</h3>
-          <h4>Relationship (Quan hệ giữa các bảng)</h4>
+          <h3>3.3 Khóa và Siêu khóa</h3>
           <ul>
-            <li><strong>1-1:</strong> Một-một (ví dụ: User - Profile)</li>
-            <li><strong>1-N:</strong> Một-nhiều (ví dụ: Customer - Orders)</li>
             <li>
-              <strong>N-N:</strong> Nhiều-nhiều (ví dụ: Products - Orders qua
-              Order_Items)
+              <strong>Khóa (Key):</strong> Một tập thuộc tính xác định duy nhất
+              các bộ trong một quan hệ
+            </li>
+            <li>
+              <strong>Siêu khóa (Super Key):</strong> Một tập thuộc tính chứa
+              khóa và thỏa mãn điều kiện xác định duy nhất tất cả các thuộc tính
+              khác của quan hệ
             </li>
           </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>3.4 Các dạng chuẩn</h3>
 
           <h4>1NF (First Normal Form)</h4>
           <p>
-            Mỗi cột chỉ chứa giá trị đơn, không có tập hợp/mảng, mỗi hàng duy
-            nhất (có khóa chính)
+            Quan hệ R là 1NF nếu tất cả các miền chứa giá trị nguyên tử (không
+            có tập hợp/mảng)
           </p>
           <div class="example">
-            <div class="example-title">Ví phạm 1NF:</div>
+            <div class="example-title">Ví dụ vi phạm 1NF:</div>
             <table class="comparison-table">
               <tr>
                 <th>student_id</th>
@@ -1032,18 +660,20 @@
                 <td>Math, Physics</td>
               </tr>
             </table>
-            <p style="margin-top: 10px">
-              ❌ Cột "courses" chứa nhiều giá trị → Vi phạm 1NF
-            </p>
+            <p>❌ Cột "courses" chứa nhiều giá trị → Vi phạm 1NF</p>
           </div>
 
           <h4>2NF (Second Normal Form)</h4>
-          <p>
-            Thỏa mãn 1NF + không có phụ thuộc bộ phận (mọi cột phải phụ thuộc
-            vào TOÀN BỘ khóa chính, kể cả composite key)
-          </p>
+          <p>Quan hệ R là 2NF nếu:</p>
+          <ul>
+            <li>Nó là 1NF</li>
+            <li>
+              Mọi thuộc tính không khóa phụ thuộc hoàn toàn vào khóa chính
+              (không có phụ thuộc bộ phận)
+            </li>
+          </ul>
           <div class="example">
-            <div class="example-title">Ví phạm 2NF:</div>
+            <div class="example-title">Ví dụ vi phạm 2NF:</div>
             <p>Khóa chính: (order_id, product_id)</p>
             <table class="comparison-table">
               <tr>
@@ -1052,19 +682,19 @@
                 <th>product_name</th>
               </tr>
             </table>
-            <p style="margin-top: 10px">
-              ❌ product_name chỉ phụ thuộc product_id, không phụ thuộc order_id
-              → Vi phạm 2NF
-            </p>
+            <p>❌ product_name chỉ phụ thuộc product_id → Vi phạm 2NF</p>
           </div>
 
           <h4>3NF (Third Normal Form)</h4>
-          <p>
-            Thỏa mãn 2NF + không có phụ thuộc bắc cầu (cột không phải khóa chính
-            không được phụ thuộc vào cột khác không phải khóa chính)
-          </p>
+          <p>Quan hệ R là 3NF nếu:</p>
+          <ul>
+            <li>Nó là 2NF</li>
+            <li>
+              Mọi thuộc tính không khóa không phụ thuộc bắc cầu vào khóa chính
+            </li>
+          </ul>
           <div class="example">
-            <div class="example-title">Ví phạm 3NF:</div>
+            <div class="example-title">Ví dụ vi phạm 3NF:</div>
             <p>Khóa chính: student_id</p>
             <table class="comparison-table">
               <tr>
@@ -1073,148 +703,1179 @@
                 <th>department_head</th>
               </tr>
             </table>
-            <p style="margin-top: 10px">
-              ❌ department_head phụ thuộc vào department, không trực tiếp vào
-              student_id → Vi phạm 3NF
-            </p>
+            <p>❌ department_head phụ thuộc vào department → Vi phạm 3NF</p>
           </div>
 
+          <h4>BCNF (Boyce-Codd Normal Form)</h4>
+          <p>
+            Quan hệ R là BCNF nếu mọi phụ thuộc hàm không tầm thường \(X
+            \rightarrow Y\) thì X là siêu khóa
+          </p>
+        </div>
+
+        <div class="topic-card">
+          <h3>3.5 Các lỗi dị thường (Anomalies)</h3>
+          <ul>
+            <li>
+              <strong>Insertion Anomaly (Lỗi chèn):</strong> Không thể chèn dữ
+              liệu mới mà không cần thêm dữ liệu không liên quan
+            </li>
+            <li>
+              <strong>Update Anomaly (Lỗi cập nhật):</strong> Cập nhật một phần
+              dữ liệu yêu cầu cập nhật nhiều hàng
+            </li>
+            <li>
+              <strong>Deletion Anomaly (Lỗi xóa):</strong> Xóa dữ liệu dẫn đến
+              mất dữ liệu có liên quan không mong muốn
+            </li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>3.6 Các lỗi khác</h3>
+          <ul>
+            <li>
+              <strong>Redundancy:</strong> Dữ liệu được lưu trữ ở nhiều nơi
+            </li>
+            <li>
+              <strong>Integrity Violation:</strong> Dữ liệu không tuân thủ ràng
+              buộc toàn vẹn
+            </li>
+            <li>
+              <strong>Deadlock:</strong> Hai hoặc nhiều giao dịch chờ đợi lẫn
+              nhau
+            </li>
+            <li>
+              <strong>Concurrency Issues:</strong> Nhiều giao dịch truy cập đồng
+              thời
+            </li>
+            <li>
+              <strong>Data Corruption:</strong> Dữ liệu bị hỏng do lỗi hệ thống
+            </li>
+            <li>
+              <strong>Performance Issues:</strong> Cơ sở dữ liệu hoạt động không
+              hiệu quả
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CHƯƠNG 4 -->
+      <div id="chapter4" class="content-section">
+        <h2>Chương 4: Mô Hình Cơ Sở Dữ Liệu Cấp Cao</h2>
+
+        <div class="topic-card">
+          <h3>4.1 Quy trình thiết kế cơ sở dữ liệu</h3>
+          <ol>
+            <li>
+              <strong>Phân tích yêu cầu (Requirements Analysis):</strong> Xác
+              định nhu cầu của người dùng
+            </li>
+            <li>
+              <strong>Thiết kế khái niệm (Conceptual Design):</strong> Mô tả cấp
+              cao (sử dụng sơ đồ ER)
+            </li>
+            <li>
+              <strong>Thiết kế logic (Logical Design):</strong> Chuyển đổi ERD
+              thành mô hình quan hệ. Không cần quan tâm thứ tự các cột trong
+              thực thể ở ERD
+            </li>
+            <li>
+              <strong>Tinh chỉnh schema (Schema Refinement):</strong> Đảm bảo
+              tính nhất quán và chuẩn hóa
+            </li>
+            <li>
+              <strong>Thiết kế vật lý (Physical Design):</strong> Bố trí đĩa và
+              chỉ mục
+            </li>
+            <li>
+              <strong>Thiết kế bảo mật (Security Design):</strong> Xác định
+              quyền truy cập dữ liệu
+            </li>
+          </ol>
+        </div>
+
+        <div class="topic-card">
+          <h3>4.2 Mô hình thực thể - mối quan hệ (ER model)</h3>
+          <ul>
+            <li>
+              <strong>Thực thể (Entity):</strong> Đối tượng thực tế phân biệt
+              được với các đối tượng khác, được mô tả bằng tập các thuộc tính
+            </li>
+            <li>
+              <strong>Tập thực thể (Entity Set):</strong> Tập hợp các thực thể
+              tương tự
+            </li>
+            <li>
+              <strong>Mối quan hệ (Relationship):</strong> Liên kết giữa hai
+              hoặc nhiều thực thể, có thể có thuộc tính riêng
+            </li>
+            <li>
+              <strong>Sơ đồ ER (ER Diagram):</strong> Sử dụng các ký hiệu để
+              biểu diễn thực thể, thuộc tính và mối quan hệ
+            </li>
+          </ul>
+
           <div class="note">
-            <strong>Tóm tắt:</strong>
-            <ul>
-              <li><strong>1NF:</strong> Giá trị đơn, có khóa chính</li>
-              <li><strong>2NF:</strong> 1NF + không phụ thuộc bộ phận</li>
-              <li><strong>3NF:</strong> 2NF + không phụ thuộc bắc cầu</li>
-            </ul>
+            <strong>Thực thể yếu (Weak Entity):</strong> Loại thực thể không thể
+            được nhận dạng duy nhất chỉ bằng các thuộc tính riêng. Nó phụ thuộc
+            vào một thực thể khác
+          </div>
+        </div>
+
+        <div class="topic-card">
+          <h3>4.3 Các ký hiệu của ERD</h3>
+
+          <h4>3 Thành phần chính:</h4>
+          <ul>
+            <li>
+              <strong>Thực thể (Entity):</strong> Hình chữ nhật. Ví dụ: Sinh
+              viên, Khóa học
+            </li>
+            <li>
+              <strong>Thuộc tính (Attribute):</strong> Hình elip. Ví dụ: Tên,
+              Tuổi, Địa chỉ
+            </li>
+            <li>
+              <strong>Mối quan hệ (Relationship):</strong> Hình thoi. Ví dụ:
+              Đăng ký, Dạy
+            </li>
+          </ul>
+
+          <h4>Thành phần bổ sung:</h4>
+          <ul>
+            <li>
+              <strong>Mối quan hệ yếu (Weak Relationship):</strong> Hình thoi
+              đôi
+            </li>
+            <li>
+              <strong>Lớp con (Subclass):</strong> Đường thẳng nối các thực thể
+              với phân cấp
+            </li>
+          </ul>
+
+          <h4>Thuộc tính của thực thể:</h4>
+          <ul>
+            <li>
+              <strong>Thuộc tính khóa (Key Attribute):</strong> Hình elip với
+              gạch dưới. Ví dụ: Mã sinh viên
+            </li>
+            <li>
+              <strong>Thuộc tính đa trị (Multivalued Attribute):</strong> Hình
+              elip đôi. Ví dụ: Số điện thoại, Email
+            </li>
+            <li>
+              <strong>Thuộc tính dẫn xuất (Derived Attribute):</strong> Hình
+              elip đứt đoạn. Ví dụ: Tuổi (tính từ ngày sinh)
+            </li>
+            <li>
+              <strong>Thuộc tính tổng hợp (Composite Attribute):</strong> Hình
+              elip lớn bao gồm các hình elip nhỏ. Ví dụ: Địa chỉ (Số nhà, Đường,
+              Quận, Thành phố)
+            </li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>4.4 Các bước trong thiết kế cơ sở dữ liệu</h3>
+          <ol>
+            <li>Thu thập dữ liệu cần mô hình hóa</li>
+            <li>Xác định các dữ liệu có thể mô hình hóa thành thực thể</li>
+            <li>Xác định các thuộc tính cho từng thực thể</li>
+            <li>Phân loại tập thực thể thành yếu hoặc mạnh</li>
+            <li>Phân loại thuộc tính (khóa, đa trị, tổng hợp, dẫn xuất)</li>
+            <li>Xác định mối quan hệ giữa các thực thể</li>
+            <li>Vẽ sơ đồ ERD với các ký hiệu phù hợp</li>
+          </ol>
+        </div>
+
+        <div class="topic-card">
+          <h3>4.5 Bảng (Table)</h3>
+          <p>
+            <strong>Khái niệm:</strong> Cấu trúc lưu trữ dữ liệu chính trong
+            CSDL quan hệ. Mỗi bảng chứa hàng (rows) và cột (columns)
+          </p>
+
+          <h4>Các thành phần của bảng:</h4>
+          <ul>
+            <li><strong>Tên bảng:</strong> Phải là duy nhất trong CSDL</li>
+            <li><strong>Cột:</strong> Mỗi cột có tên và kiểu dữ liệu</li>
+            <li>
+              <strong>Khóa chính (Primary Key):</strong> Xác định duy nhất mỗi
+              hàng
+            </li>
+            <li>
+              <strong>Khóa ngoại (Foreign Key):</strong> Liên kết với khóa chính
+              của bảng khác
+            </li>
+            <li>
+              <strong>Các ràng buộc:</strong> NOT NULL, UNIQUE, CHECK, DEFAULT
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CHƯƠNG 5 -->
+      <div id="chapter5" class="content-section">
+        <h2>Chương 5: Ngôn Ngữ Truy Vấn Đại Số - Bag</h2>
+
+        <div class="topic-card">
+          <h3>5.1 Quan hệ dạng bag (multi-set)</h3>
+          <p>
+            <strong>Bag:</strong> Cho phép cùng một bộ (tuple) xuất hiện nhiều
+            lần trong một quan hệ
+          </p>
+          <p>
+            <strong>Lý do sử dụng:</strong> Một số phép toán quan hệ hiệu quả
+            hơn khi sử dụng mô hình bag như phép union và projection
+          </p>
+        </div>
+
+        <div class="topic-card">
+          <h3>5.2 Các phép toán quan hệ trên bag</h3>
+          <p>Giả sử bộ t xuất hiện n lần trong R và m lần trong S:</p>
+
+          <ul>
+            <li><strong>Union (R ∪ S):</strong> Bộ t xuất hiện (n + m) lần</li>
+            <li>
+              <strong>Intersection (R ∩ S):</strong> Bộ t xuất hiện MIN(n, m)
+              lần
+            </li>
+            <li>
+              <strong>Difference (R \ S):</strong> Bộ t xuất hiện MAX(0, n - m)
+              lần
+            </li>
+          </ul>
+
+          <div class="example">
+            <div class="example-title">Ví dụ:</div>
+            <p>R = {1, 1, 2, 3}</p>
+            <p>S = {1, 2, 2, 4}</p>
+            <p>R ∪ S = {1, 1, 1, 2, 2, 2, 3, 4}</p>
+            <p>R ∩ S = {1, 2}</p>
+            <p>R \ S = {1, 3}</p>
+          </div>
+        </div>
+
+        <div class="topic-card">
+          <h3>5.3 Các phép toán mở rộng trên bag</h3>
+
+          <h4>1. Duplicate Elimination (Loại bỏ trùng lặp)</h4>
+          <p>Ký hiệu: \(\delta(R)\)</p>
+          <div class="code-block">
+            SELECT DISTINCT column_name FROM table_name;
+          </div>
+
+          <h4>2. Aggregation Operators (Phép toán tổng hợp)</h4>
+          <ul>
+            <li><strong>SUM:</strong> Tính tổng</li>
+            <li><strong>AVG:</strong> Tính trung bình</li>
+            <li><strong>MIN:</strong> Giá trị nhỏ nhất</li>
+            <li><strong>MAX:</strong> Giá trị lớn nhất</li>
+            <li><strong>COUNT:</strong> Đếm số lượng</li>
+          </ul>
+          <div class="code-block">
+            SELECT COUNT(*), AVG(price), SUM(quantity) FROM products;
+          </div>
+
+          <h4>3. Grouping Operator (Phép toán nhóm)</h4>
+          <p>Ký hiệu: \(\gamma_L(R)\)</p>
+          <p>Nhóm các bộ theo các thuộc tính trong danh sách L</p>
+          <div class="code-block">
+            SELECT category_id, COUNT(*) FROM products GROUP BY category_id;
+          </div>
+
+          <h4>4. Extended Projection (Phép chiếu mở rộng)</h4>
+          <p>Ký hiệu: \(\pi_L(R)\)</p>
+          <p>Có thể bao gồm các biểu thức và đổi tên thuộc tính</p>
+          <div class="code-block">
+            SELECT product_id, price * 1.1 AS new_price FROM products;
+          </div>
+
+          <h4>5. Sorting Operator (Phép toán sắp xếp)</h4>
+          <p>Ký hiệu: \(\tau_L(R)\)</p>
+          <p>Sắp xếp các bộ theo các thuộc tính trong danh sách L</p>
+          <div class="code-block">
+            SELECT * FROM products ORDER BY price DESC;
+          </div>
+
+          <h4>6. Outer Join (Phép toán kết hợp ngoài)</h4>
+          <ul>
+            <li><strong>Left Outer Join:</strong> Lấy tất cả từ bảng trái</li>
+            <li><strong>Right Outer Join:</strong> Lấy tất cả từ bảng phải</li>
+            <li><strong>Full Outer Join:</strong> Lấy tất cả từ cả hai bảng</li>
+          </ul>
+          <div class="code-block">
+            SELECT * FROM customers c LEFT OUTER JOIN orders o ON c.customer_id
+            = o.customer_id;
           </div>
         </div>
       </div>
 
-      <footer>
-        <div
-          style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-          "
-        >
-          <div style="font-size: 48px">🎓</div>
-          <div>
-            <h2 style="margin: 0; font-size: 1.8em">Tuấn và Quân</h2>
-            <p style="margin: 5px 0 0 0; opacity: 0.9">
-              Database Theory - Learning Platform
-            </p>
+      <!-- CHƯƠNG 6 -->
+      <div id="chapter6" class="content-section">
+        <h2>Chương 6: Ngôn Ngữ Cơ Sở Dữ Liệu SQL</h2>
+
+        <div class="topic-card">
+          <h3>6.1 Ràng buộc toàn vẹn (Integrity Constraints)</h3>
+          <p>
+            <strong>Mục đích:</strong> Ngăn chặn các bất đồng ngữ nghĩa trong dữ
+            liệu
+          </p>
+
+          <h4>1. Ràng buộc khóa (Key Constraints)</h4>
+          <ul>
+            <li>
+              <strong>Primary Key:</strong> Xác định duy nhất mỗi bản ghi, không
+              được NULL
+            </li>
+            <li>
+              <strong>Candidate Key:</strong> Có thể được sử dụng như khóa chính
+            </li>
+          </ul>
+          <div class="code-block">
+            CREATE TABLE products ( product_id INT PRIMARY KEY, product_name
+            VARCHAR(100) UNIQUE );
+          </div>
+
+          <h4>2. Ràng buộc thuộc tính (Attribute Constraints)</h4>
+          <ul>
+            <li><strong>NOT NULL:</strong> Không cho phép giá trị NULL</li>
+            <li><strong>NULL:</strong> Cho phép giá trị NULL</li>
+            <li><strong>CHECK:</strong> Đảm bảo giá trị thỏa mãn điều kiện</li>
+            <li><strong>DEFAULT:</strong> Giá trị mặc định</li>
+          </ul>
+          <div class="code-block">
+            CREATE TABLE employees ( employee_id INT PRIMARY KEY, name
+            VARCHAR(50) NOT NULL, age INT CHECK (age >= 18), salary DECIMAL(10,
+            2) DEFAULT 5000.00 );
+          </div>
+
+          <h4>3. Ràng buộc toàn vẹn tham chiếu</h4>
+          <ul>
+            <li>
+              <strong>Foreign Key:</strong> Liên kết với khóa chính của bảng
+              khác
+            </li>
+          </ul>
+          <div class="code-block">
+            ALTER TABLE orders ADD CONSTRAINT fk_customer FOREIGN KEY
+            (customer_id) REFERENCES customers(customer_id);
+          </div>
+
+          <h4>4. Ràng buộc toàn cục (Global Constraints)</h4>
+          <ul>
+            <li><strong>CHECK toàn cục:</strong> Áp dụng trên nhiều bảng</li>
+            <li>
+              <strong>CREATE ASSERTION:</strong> Định nghĩa ràng buộc phức tạp
+            </li>
+          </ul>
+          <div class="code-block">
+            CREATE ASSERTION valid_salary CHECK (NOT EXISTS ( SELECT * FROM
+            employees WHERE salary < 0 OR salary > 1000000 ));
           </div>
         </div>
-        <p>📚 Tài liệu học SQL toàn diện từ cơ bản đến nâng cao</p>
-        <p>💡 Nếu có ích thì quay lại cảm ơn câu đeeeee</p>
-        <p style="margin-top: 15px">
-          <a
-            href="https://www.facebook.com/tuanvaquan"
-            target="_blank"
-            style="
-              color: white;
-              text-decoration: none;
-              padding: 10px 20px;
-              background: rgba(255, 255, 255, 0.2);
-              border-radius: 25px;
-              display: inline-block;
-              transition: all 0.3s;
-            "
-          >
-            📘 Facebook: Tuấn và Quân
-          </a>
-        </p>
-        <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9em">
-          © 2025 Database Theory Learning Platform | Created with ❤️
-        </p>
-      </footer>
+
+        <div class="topic-card">
+          <h3>6.2 Ngôn ngữ định nghĩa dữ liệu (DDL)</h3>
+
+          <h4>CREATE - Tạo cơ sở dữ liệu, bảng</h4>
+          <div class="code-block">
+            CREATE DATABASE my_database; CREATE TABLE customers ( customer_id
+            INT PRIMARY KEY, first_name VARCHAR(50), last_name VARCHAR(50),
+            email VARCHAR(100) );
+          </div>
+
+          <h4>ALTER - Thay đổi cấu trúc bảng</h4>
+          <div class="code-block">
+            ALTER TABLE customers ADD COLUMN phone VARCHAR(20); ALTER TABLE
+            customers DROP COLUMN phone; ALTER TABLE customers ALTER COLUMN
+            email VARCHAR(150);
+          </div>
+
+          <h4>DROP - Xóa bảng/CSDL</h4>
+          <div class="code-block">
+            DROP TABLE stocks; DROP DATABASE my_database;
+          </div>
+          <div class="warning">
+            <strong>Lưu ý:</strong> DROP xóa toàn bộ cấu trúc và dữ liệu, không
+            thể khôi phục!
+          </div>
+        </div>
+
+        <div class="topic-card">
+          <h3>6.3 Ngôn ngữ thao tác dữ liệu (DML)</h3>
+
+          <h4>INSERT - Thêm dữ liệu</h4>
+          <p>Hoạt động trên một bảng đơn</p>
+          <div class="code-block">
+            INSERT INTO customers (customer_id, first_name, last_name) VALUES
+            (1, 'John', 'Doe'); INSERT INTO customers VALUES (2, 'Jane',
+            'Smith', 'jane@email.com');
+          </div>
+
+          <h4>UPDATE - Cập nhật dữ liệu</h4>
+          <p>
+            Hoạt động trên một bảng đơn, nhưng có thể sử dụng thông tin từ các
+            bảng khác
+          </p>
+          <div class="code-block">
+            UPDATE products SET list_price = list_price * 1.1 WHERE category_id
+            = 1; UPDATE customers SET city = 'New York' WHERE customer_id IN
+            (SELECT customer_id FROM orders WHERE order_date > '2024-01-01');
+          </div>
+
+          <h4>DELETE - Xóa dữ liệu</h4>
+          <p>
+            Hoạt động trên một bảng đơn, nhưng có thể sử dụng thông tin từ các
+            bảng khác
+          </p>
+          <div class="code-block">
+            DELETE FROM customers WHERE city = 'Tokyo'; DELETE FROM products
+            WHERE product_id NOT IN (SELECT product_id FROM order_items);
+          </div>
+
+          <h4>SELECT - Truy vấn dữ liệu</h4>
+          <p>Có thể hoạt động trên một hoặc nhiều bảng</p>
+          <div class="code-block">
+            SELECT * FROM customers WHERE city = 'Tokyo'; SELECT c.first_name,
+            o.order_id FROM customers c JOIN orders o ON c.customer_id =
+            o.customer_id;
+          </div>
+        </div>
+
+        <div class="topic-card">
+          <h3>6.4 Truy vấn con (Subquery)</h3>
+          <p>
+            <strong>Truy vấn con:</strong> Một truy vấn được sử dụng để hỗ trợ
+            trong việc đánh giá một truy vấn khác
+          </p>
+
+          <h4>Các loại truy vấn con:</h4>
+          <ul>
+            <li><strong>Truy vấn con trả về một giá trị:</strong></li>
+          </ul>
+          <div class="code-block">
+            SELECT * FROM products WHERE list_price > (SELECT AVG(list_price)
+            FROM products);
+          </div>
+
+          <ul>
+            <li><strong>Truy vấn con trả về nhiều giá trị:</strong></li>
+          </ul>
+          <div class="code-block">
+            SELECT * FROM customers WHERE customer_id IN (SELECT customer_id
+            FROM orders WHERE order_date > '2024-01-01');
+          </div>
+
+          <ul>
+            <li>
+              <strong>Truy vấn con tương quan (Correlated Subquery):</strong>
+            </li>
+          </ul>
+          <div class="code-block">
+            SELECT c.customer_id, c.first_name FROM customers c WHERE EXISTS (
+            SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id AND
+            o.order_date > '2024-01-01' );
+          </div>
+
+          <ul>
+            <li><strong>Truy vấn con trong mệnh đề FROM:</strong></li>
+          </ul>
+          <div class="code-block">
+            SELECT * FROM ( SELECT product_id, product_name, list_price FROM
+            products WHERE list_price > 1000 ) AS expensive_products;
+          </div>
+        </div>
+
+        <div class="topic-card">
+          <h3>6.5 Các phép toán trên toàn bộ quan hệ</h3>
+
+          <h4>Loại bỏ trùng lặp (DISTINCT)</h4>
+          <div class="code-block">SELECT DISTINCT city FROM customers;</div>
+
+          <h4>Phép toán tập hợp</h4>
+          <ul>
+            <li><strong>UNION:</strong> Hợp (loại bỏ trùng lặp)</li>
+            <li><strong>UNION ALL:</strong> Hợp (giữ trùng lặp)</li>
+            <li><strong>INTERSECT:</strong> Giao</li>
+            <li><strong>EXCEPT:</strong> Hiệu</li>
+          </ul>
+          <div class="code-block">
+            SELECT product_name FROM products WHERE category_id = 1 UNION SELECT
+            product_name FROM products WHERE category_id = 2;
+          </div>
+
+          <h4>Phép toán nhóm và tổng hợp</h4>
+          <div class="code-block">
+            SELECT store_id, COUNT(product_id) AS total_products,
+            AVG(list_price) AS avg_price FROM stocks GROUP BY store_id HAVING
+            COUNT(product_id) > 10 ORDER BY total_products DESC;
+          </div>
+
+          <div class="note">
+            <strong>WHERE vs HAVING:</strong>
+            <ul>
+              <li>
+                WHERE: Lọc dữ liệu TRƯỚC khi nhóm, không dùng với hàm tổng hợp
+              </li>
+              <li>HAVING: Lọc dữ liệu SAU khi nhóm, dùng với hàm tổng hợp</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="topic-card">
+          <h3>6.6 Thứ tự thực thi SQL</h3>
+          <div class="note">
+            <strong>Thứ tự thực thi các mệnh đề:</strong>
+            <ol>
+              <li>
+                <strong>FROM</strong> (bao gồm JOIN) - Xác định nguồn dữ liệu
+              </li>
+              <li><strong>WHERE</strong> - Lọc dữ liệu</li>
+              <li><strong>GROUP BY</strong> - Nhóm dữ liệu</li>
+              <li><strong>HAVING</strong> - Lọc nhóm</li>
+              <li><strong>SELECT</strong> - Chọn cột</li>
+              <li><strong>ORDER BY</strong> - Sắp xếp</li>
+            </ol>
+            <p><strong>Lưu ý:</strong> Thứ tự viết khác với thứ tự thực thi!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHƯƠNG 7 -->
+      <div id="chapter7" class="content-section">
+                   
+        <h2>Chương 7: Các Vấn Đề Thực Tế của Ứng Dụng Cơ Sở Dữ Liệu</h2>
+                                
+        <div class="topic-card">
+                         
+          <h3>7.1 Giao dịch trong SQL (Transaction)</h3>
+                         
+          <p>
+            <strong>Giao dịch (Transaction):</strong> Một nhóm các thao tác cần
+            được thực hiện cùng nhau.
+          </p>
+                                          
+          <h4>Tính chất ACID:</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Atomicity (Tính nguyên tử):</strong> Giao dịch phải được
+              thực hiện toàn bộ hoặc không thực hiện gì cả.
+            </li>
+                               
+            <li>
+              <strong>Consistency (Tính nhất quán):</strong> Giao dịch phải duy
+              trì tính nhất quán của cơ sở dữ liệu.
+            </li>
+                               
+            <li>
+              <strong>Isolation (Tính cô lập):</strong> Giao dịch phải được thực
+              hiện như thể nó là giao dịch duy nhất trên hệ thống.
+            </li>
+                               
+            <li>
+              <strong>Durability (Tính bền vững):</strong> Các thay đổi được
+              thực hiện bởi giao dịch phải được duy trì ngay cả khi có sự cố.
+            </li>
+                           
+          </ul>
+
+                         
+          <div class="example">
+                               
+            <div class="example-title">Ví dụ về Xử lý Lỗi trong Giao dịch:</div>
+                               
+            <p>
+              Khi một lỗi xảy ra trong giao dịch và không được xử lý hoặc
+              <strong>không được rollback một cách rõ ràng</strong>, hệ quản trị
+              cơ sở dữ liệu sẽ tự động rollback giao dịch đó để đảm bảo tính
+              toàn vẹn của dữ liệu.
+            </p>
+                           
+          </div>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>7.2 Chỉ mục (Index) và Tối ưu hóa truy vấn</h3>
+                         
+          <p>
+            <strong>Chỉ mục (Index):</strong> Cấu trúc dữ liệu giúp tìm kiếm các
+            bộ có giá trị cố định cho một thuộc tính A hiệu quả.
+          </p>
+                                          
+          <h4>Đặc điểm và Lợi ích:</h4>
+                         
+          <ul>
+                               
+            <li>Chỉ mục là một <strong>cấu trúc dữ liệu</strong>.</li>
+                               
+            <li>
+              Có thể được tạo trên <strong>bất kỳ thuộc tính nào</strong> (không
+              nhất thiết là khóa chính).
+            </li>
+                               
+            <li>
+              Thường được triển khai như
+              <strong>cây tìm kiếm nhị phân (B-tree)</strong>, trong đó mỗi cặp
+              (khóa, vị trí) liên kết với một tập các vị trí của các bộ.
+            </li>
+                           
+          </ul>
+                                          
+          <h4>Nhược điểm:</h4>
+                         
+          <ul>
+                               
+            <li>Tốn kém <strong>không gian lưu trữ</strong>.</li>
+                               
+            <li>
+              Giảm <strong>hiệu suất ghi</strong> (INSERT, UPDATE, DELETE) do
+              phải cập nhật nhiều chỉ mục.
+            </li>
+                               
+            <li>Tốn kém <strong>hiệu suất duy trì</strong>.</li>
+                               
+            <li>Tăng độ phức tạp của quản lý.</li>
+                               
+            <li>
+              Tác động tiêu cực đến <strong>tối ưu hóa truy vấn</strong> (Bộ tối
+              ưu hóa có thể chọn sai).
+            </li>
+                           
+          </ul>
+                                          
+          <h4>Các loại chỉ mục và cú pháp:</h4>
+                         
+          <ul>
+                               
+            <li>Chỉ mục có cụm (Clustered Index)</li>
+                               
+            <li>Chỉ mục không có cụm (Non-clustered Index)</li>
+                           
+          </ul>
+                         
+          <div class="code-block">
+            CREATE CLUSTERED INDEX index_name ON dbo.Tablename(ColumnName1,
+            ColumnName2...); CREATE NONCLUSTERED INDEX index_name ON
+            dbo.Tablename(ColumnName1, ColumnName2...); DROP INDEX index_name;
+          </div>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>7.3 Views</h3>
+                         
+          <p>
+            <strong>Views:</strong> Một mối quan hệ ảo được định nghĩa bởi một
+            biểu thức như truy vấn SQL.
+          </p>
+                                          
+          <h4>Các loại views:</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Views đơn giản (Simple views):</strong> Có thể INSERT,
+              UPDATE, DELETE thông qua view.
+            </li>
+                               
+            <li>
+              <strong>Views phức tạp (Complex views):</strong> Không thể cập
+              nhật trực tiếp, chỉ có thể đọc.
+            </li>
+                           
+          </ul>
+                         
+          <div class="code-block">
+            CREATE VIEW view_name AS SELECT * FROM tblEmployee WHERE depNum=1;
+          </div>
+                     
+        </div>
+               
+      </div>
+
+                     
+      <div id="chapter8" class="content-section">
+                   
+        <h2>Chương 8: Lập Trình Cơ Sở Dữ Liệu trên SQL Server (T-SQL)</h2>
+                                
+        <div class="topic-card">
+                         
+          <h3>8.1 Lập trình T-SQL (Transact-SQL)</h3>
+                                          
+          <h4>Biến (Variables):</h4>
+                         
+          <div class="code-block">
+            DECLARE @local_variable AS data_type = initial_value; SET
+            @variable_name = value; PRINT @variable_name;
+          </div>
+                                          
+          <h4>Câu lệnh điều khiển luồng:</h4>
+                         
+          <h5>IF-ELSE</h5>
+                         
+          <div class="code-block">
+            IF condition BEGIN -- statements END ELSE BEGIN -- statements END
+          </div>
+                         
+          <h5>WHILE</h5>
+                         
+          <div class="code-block">WHILE condition BEGIN -- statements END</div>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>8.2 Stored-procedure</h3>
+                         
+          <p>
+            <strong>Stored-procedure:</strong> Đoạn mã SQL được lưu trữ và có
+            thể tái sử dụng. Nó là một tập hợp các câu lệnh SQL được lưu trữ
+            trong CSDL và có thể thực hiện các tác vụ phức tạp (ví dụ: điều
+            khiển luồng, xử lý lỗi, thao tác dữ liệu phức tạp).
+          </p>
+                         
+          <div class="code-block">
+            CREATE PROCEDURE procedure_name AS sql_statement; EXEC
+            procedure_name;
+          </div>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>8.3 Functions</h3>
+                         
+          <h4>Các loại functions:</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Scalar functions:</strong> Hàm trả về một giá trị đơn
+              (nguyên, số thập phân, chuỗi, ...).
+            </li>
+                               
+            <li>
+              <strong>Inline table-valued functions:</strong> Hàm trả về một
+              bảng dữ liệu, định nghĩa bằng một câu lệnh
+              <code>SELECT</code> đơn.
+            </li>
+                               
+            <li>
+              <strong>Multi-statement table-valued functions:</strong> Hàm trả
+              về một bảng dữ liệu, có thể bao gồm nhiều câu lệnh SQL bên trong
+              thân hàm.
+            </li>
+                           
+          </ul>
+                         
+          <div class="code-block">
+            CREATE FUNCTION function_name (@param1 data_type, @param2 data_type)
+            RETURNS return_data_type AS BEGIN -- function body RETURN value;
+            END;
+          </div>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>8.4 Triggers</h3>
+                         
+          <p>
+            <strong>Triggers:</strong> Kích hoạt khi một sự kiện (INSERT,
+            UPDATE, DELETE) xảy ra. Có 3 loại trigger tương ứng với 3 sự kiện
+            trên.
+          </p>
+                                          
+          <h4>Bảng đặc biệt trong Trigger (inserted và deleted):</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Bảng <code>inserted</code>:</strong> Chứa các hàng **mới**
+              được chèn vào hoặc các hàng **mới sau khi cập nhật**.
+            </li>
+                               
+            <li>
+              <strong>Bảng <code>deleted</code>:</strong> Chứa các hàng **cũ**
+              bị xóa hoặc các hàng **cũ trước khi cập nhật**.
+            </li>
+                           
+          </ul>
+                         
+          <div class="code-block">
+            CREATE TRIGGER trigger_name ON table_name AFTER INSERT, UPDATE,
+            DELETE AS BEGIN -- trigger body END;
+          </div>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>8.5 Cursors</h3>
+                         
+          <p>
+            <strong>Cursors:</strong> Cho phép duyệt qua tập kết quả của từng
+            truy vấn và xử lí từng bộ riêng lẻ. Tuy nhiên, sử dụng Cursors
+            thường **không được coi là phương pháp tối ưu nhất** vì có thể làm
+            chậm hiệu suất.
+          </p>
+                         
+          <div class="code-block">
+            DECLARE cursor_name CURSOR FOR SELECT statement; OPEN cursor_name;
+            FETCH NEXT FROM cursor_name INTO @var1, @var2; CLOSE cursor_name;
+            DEALLOCATE cursor_name;
+          </div>
+                     
+        </div>
+               
+      </div>
+
+                     
+      <div id="bonus" class="content-section">
+                   
+        <h2>Bonus: Các Kiến Thức Nâng Cao và Liên Quan</h2>
+                                
+        <div class="topic-card">
+                         
+          <h3>Các Mối Quan Hệ trong Cơ Sở Dữ Liệu</h3>
+                                          
+          <h4>1. Mối quan hệ 1-1 (One-to-One)</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Định nghĩa:</strong> Mỗi thực thể này liên kết với một
+              thực thể kia và ngược lại.
+            </li>
+                               
+            <li>
+              <strong>Lưu ý:</strong> Dùng khóa ngoại DUY NHẤT. Cân nhắc **gộp
+              các bảng** nếu ít thuộc tính.
+            </li>
+                           
+          </ul>
+                                          
+          <h4>2. Mối quan hệ 1-N (One-to-Many)</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Định nghĩa:</strong> Một thực thể cha liên kết với nhiều
+              thực thể con, nhưng mỗi thực thể con chỉ có một cha.
+            </li>
+                               
+            <li>
+              <strong>Lưu ý:</strong> Khóa ngoại đặt ở bảng "nhiều", tham chiếu
+              khóa chính của bảng "một".
+            </li>
+                           
+          </ul>
+                                          
+          <h4>3. Mối quan hệ N-N (Many-to-Many)</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Định nghĩa:</strong> Mỗi thực thể có thể liên kết với
+              nhiều thực thể ở tập kia và ngược lại.
+            </li>
+                               
+            <li>
+              <strong>Lưu ý:</strong> Phải tạo
+              <strong>bảng liên kết (junction table)</strong> chứa ít nhất hai
+              khóa ngoại.
+            </li>
+                           
+          </ul>
+                                          
+          <h4>4. Mối quan hệ Cha-Con (Hierarchical)</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Định nghĩa:</strong> Một thực thể cha liên kết với nhiều
+              thực thể con (thường trong mô hình phân cấp).
+            </li>
+                               
+            <li>
+              <strong>Lưu ý:</strong> Dùng khóa ngoại liên kết con với cha. Cân
+              nhắc sử dụng cấu trúc **cây (tree)** hoặc **đồ thị (graph)**.
+            </li>
+                           
+          </ul>
+                                          
+          <h4>5. Mối quan hệ Mạnh-Yếu (Strong-Weak)</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Định nghĩa:</strong> Mối quan hệ giữa thực thể mạnh (có
+              khóa chính riêng) và thực thể yếu (phụ thuộc vào thực thể mạnh để
+              nhận dạng).
+            </li>
+                               
+            <li>
+              <strong>Lưu ý:</strong> Khóa chính của thực thể yếu bao gồm **khóa
+              ngoại tham chiếu** của thực thể mạnh.
+            </li>
+                           
+          </ul>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>Lý Thuyết Về RDBMS (Relational Database Management System)</h3>
+                         
+          <p>
+            RDBMS là một hệ thống quản lý cơ sở dữ liệu dựa trên **mô hình quan
+            hệ**, tổ chức dữ liệu thành các bảng.
+          </p>
+                                          
+          <h4>Thành Phần Chính Của RDBMS:</h4>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Bộ sưu tập các bảng (Collection of Tables):</strong> Là
+              câu trả lời đúng vì RDBMS quản lý và lưu trữ dữ liệu chủ yếu thông
+              qua các bảng.
+            </li>
+                               
+            <li>
+              **Bộ sưu tập các bản ghi (Records):** (Mỗi hàng trong bảng).
+            </li>
+                               
+            <li>
+              **Bộ sưu tập các khóa (Keys):** (Các thuộc tính xác định duy nhất
+              các bản ghi).
+            </li>
+                               
+            <li>**Bộ sưu tập các trường (Fields):** (Các cột trong bảng).</li>
+                           
+          </ul>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>Các Loại JOIN trong SQL</h3>
+                         
+          <ul>
+                               
+            <li>
+              <strong>INNER JOIN:</strong> Trả về các hàng khi có sự phù hợp
+              trong **cả hai bảng**. Mặc định nếu không chỉ định loại JOIN.
+            </li>
+                               
+            <li>
+              <strong>LEFT JOIN (LEFT OUTER JOIN):</strong> Trả về tất cả các
+              hàng từ bảng **trái**, và các hàng phù hợp từ bảng phải (NULL nếu
+              không khớp).
+            </li>
+                               
+            <li>
+              <strong>RIGHT JOIN (RIGHT OUTER JOIN):</strong> Trả về tất cả các
+              hàng từ bảng **phải**, và các hàng phù hợp từ bảng trái (NULL nếu
+              không khớp).
+            </li>
+                               
+            <li>
+              <strong>FULL JOIN (FULL OUTER JOIN):</strong> Trả về tất cả các
+              hàng khi có sự phù hợp trong một trong các bảng (NULL nếu không
+              khớp).
+            </li>
+                               
+            <li>
+              <strong>CROSS JOIN:</strong> Trả về **tích Đề-các** của các hàng
+              từ hai bảng (M x N hàng).
+            </li>
+                               
+            <li>
+              <strong>SELF JOIN:</strong> Một bảng được JOIN với **chính nó**.
+            </li>
+                           
+          </ul>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>Các Hàm Xử Lý Chuỗi trong SQL Server</h3>
+                         
+          <ul>
+                               
+            <li>
+              <strong>LEFT(string, length):</strong> Trả về **$length$** ký tự
+              từ **đầu** chuỗi. (Ví dụ:
+              <code>LEFT('FPTUDN', 3)</code> $\rightarrow$ 'FPT')
+            </li>
+                               
+            <li>
+              <strong>RIGHT(string, length):</strong> Trả về **$length$** ký tự
+              từ **cuối** chuỗi. (Ví dụ:
+              <code>RIGHT('FPTUDN', 3)</code> $\rightarrow$ 'UDN')
+            </li>
+                               
+            <li>
+              <strong>LEN(string):</strong> Trả về **độ dài** của chuỗi. (Ví dụ:
+              <code>LEN('FPTUDN')</code> $\rightarrow$ 6)
+            </li>
+                               
+            <li>
+              <strong>CHARINDEX(substring, string):</strong> Trả về vị trí **bắt
+              đầu** của chuỗi con. (Ví dụ:
+              <code>CHARINDEX('PT', 'FPTUDN')</code> $\rightarrow$ 2)
+            </li>
+                               
+            <li>
+              <strong>PATINDEX('%pattern%', string):</strong> Trả về vị trí của
+              một **mẫu** trong chuỗi. (Ví dụ:
+              <code>PATINDEX('%PT%', 'FPTUDN')</code> $\rightarrow$ 2)
+            </li>
+                               
+            <li>
+              <strong>REPLACE(string, old, new):</strong> Thay thế tất cả lần
+              xuất hiện của chuỗi **$old$** bằng chuỗi **$new$**. (Ví dụ:
+              <code>REPLACE('FPTUDN', 'UDN', 'University')</code> $\rightarrow$
+              'FPTUniversity')
+            </li>
+                               
+            <li>
+              <strong>RTRIM(string)/LTRIM(string):</strong> Loại bỏ khoảng trắng
+              **cuối** (RTRIM) hoặc **đầu** (LTRIM).
+            </li>
+                               
+            <li>
+              <strong>CONCAT(s1, s2, ...):</strong> **Kết hợp** nhiều chuỗi
+              thành một. (Ví dụ: <code>CONCAT('FPT', 'UDN')</code> $\rightarrow$
+              'FPTUDN')
+            </li>
+                               
+            <li>
+              <strong>SUBSTRING(string, start, length):</strong> Trích xuất
+              **$length$** ký tự từ vị trí **$start$** (bắt đầu từ 1). (Ví dụ:
+              <code>SUBSTRING('HelloWorld', 6, 5)</code> $\rightarrow$ 'World')
+            </li>
+                           
+          </ul>
+                     
+        </div>
+
+                   
+        <div class="topic-card">
+                         
+          <h3>Các Khái Niệm Khác</h3>
+                         
+          <ul>
+                               
+            <li>
+              <strong>Toán tử Nhị phân (Binary Operation):</strong> Yêu cầu
+              **hai toán hạng** (hai bảng) để thực hiện phép toán (ví dụ: Union,
+              Join, Cartesian Product).
+            </li>
+                               
+            <li>
+              <strong>Toán tử Đơn nhân (Unary Operation):</strong> Chỉ yêu cầu
+              **một toán hạng** (một bảng) để thực hiện phép toán (ví dụ:
+              Selection $\sigma$, Projection $\pi$, Duplicate Elimination
+              $\delta$, Grouping $\gamma$).
+            </li>
+                               
+            <li>
+              <strong>Kiểu dữ liệu:</strong> Gồm Kiểu số (INT, FLOAT, DECIMAL),
+              Chuỗi ký tự (VARCHAR, CHAR, TEXT), Kiểu ngày và giờ (DATE, TIME,
+              DATETIME), và Kiểu bảng (Table type).
+            </li>
+                           
+          </ul>
+                     
+        </div>
+               
+      </div>
+                  
     </div>
 
+       
+    <footer>
+             
+      <p>&copy; 2024 Database Theory - Tuan Va Quan. All rights reserved.</p>
+         
+    </footer>
+
+       
     <script>
-      // Tab navigation
-      const tabs = document.querySelectorAll(".nav-tab");
-      const sections = document.querySelectorAll(".content-section");
+      document.addEventListener("DOMContentLoaded", () => {
+        const navTabs = document.querySelectorAll(".nav-tab");
+        const contentSections = document.querySelectorAll(".content-section");
+        const searchInput = document.getElementById("searchInput"); // Chuyển tab
 
-      tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          const targetSection = tab.getAttribute("data-section");
+        navTabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            navTabs.forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
 
-          tabs.forEach((t) => t.classList.remove("active"));
-          sections.forEach((s) => s.classList.remove("active"));
+            contentSections.forEach((section) => {
+              section.classList.remove("active");
+            });
 
-          tab.classList.add("active");
-          document.getElementById(targetSection).classList.add("active");
-
-          // Scroll to top
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-      });
-
-      // Search functionality
-      const searchInput = document.getElementById("searchInput");
-      const allCards = document.querySelectorAll(".topic-card");
-
-      searchInput.addEventListener("input", (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-
-        allCards.forEach((card) => {
-          const text = card.textContent.toLowerCase();
-          const parent = card.closest(".content-section");
-
-          if (text.includes(searchTerm) || searchTerm === "") {
-            card.style.display = "block";
-            if (searchTerm !== "") {
-              // Show all sections when searching
-              sections.forEach((s) => s.classList.add("active"));
+            const targetId = tab.getAttribute("data-section");
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+              targetSection.classList.add("active"); // Re-render MathJax content in the new active section
+              MathJax.typeset([targetSection]);
             }
-          } else {
-            card.style.display = "none";
-          }
-        });
+          });
+        }); // Xử lý tìm kiếm (tối giản, chỉ ẩn/hiện)
 
-        // If search is cleared, return to current tab
-        if (searchTerm === "") {
-          const activeTab = document.querySelector(".nav-tab.active");
-          const targetSection = activeTab.getAttribute("data-section");
-          sections.forEach((s) => s.classList.remove("active"));
-          document.getElementById(targetSection).classList.add("active");
+        searchInput.addEventListener("keyup", (e) => {
+          const searchTerm = e.target.value.toLowerCase().trim(); // Hiển thị tất cả các topic-card nếu thanh tìm kiếm trống
+          if (searchTerm === "") {
+            document
+              .querySelectorAll(".topic-card")
+              .forEach((card) => (card.style.display = "block")); // Chắc chắn rằng chỉ có content section đang active được hiển thị
+            contentSections.forEach((section) => {
+              section.style.display = section.classList.contains("active")
+                ? "block"
+                : "none";
+            });
+            return;
+          } // Ẩn tất cả content sections và chỉ hiển thị các topic-card phù hợp
+
+          contentSections.forEach(
+            (section) => (section.style.display = "block")
+          ); // Tạm thời hiển thị tất cả để tìm kiếm
+          navTabs.forEach((t) => t.classList.remove("active")); // Bỏ active tab
+
+          document.querySelectorAll(".topic-card").forEach((card) => {
+            const content = card.textContent.toLowerCase();
+            if (content.includes(searchTerm)) {
+              card.style.display = "block";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        }); // Load MathJax cho lần đầu
+        const activeSection = document.querySelector(".content-section.active");
+        if (activeSection) {
+          MathJax.typeset([activeSection]);
         }
-      });
-
-      // Smooth scroll for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({ behavior: "smooth" });
-          }
-        });
-      });
-
-      // Add animation on scroll
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }
-        });
-      }, observerOptions);
-
-      allCards.forEach((card) => {
-        card.style.opacity = "0";
-        card.style.transform = "translateY(20px)";
-        card.style.transition = "opacity 0.5s, transform 0.5s";
-        observer.observe(card);
       });
     </script>
   </body>
